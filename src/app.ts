@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Cors configuration
-const whitelist = ['http://localhost:8080','http://localhost:63345' ,'https://myapp.com', 'https://myotherapp.es'];
+/*const whitelist = ['http://localhost:8080','http://localhost:63345' ,'https://myapp.com', 'https://myotherapp.es'];
 const options = {
   origin: (origin: string, callback: Function) => {
     if (whitelist.includes(origin)) {
@@ -25,7 +25,8 @@ const options = {
     }
   }
 };
-app.use(cors(options));
+app.use(cors(options));*/
+app.use(cors())
 
 
 app.use(
