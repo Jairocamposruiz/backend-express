@@ -1,1 +1,1 @@
-web: yarn heroku
+web: node ./dist/src/server.js
