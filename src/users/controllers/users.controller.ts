@@ -2,7 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express';
 
 import UsersService from '../services/users.service';
 import { validatorHandler } from '../../common/middlewares/validator.handler';
-import { createUserDto, updeateUserDto, getUserDto } from '../dtos/user.dto';
+import { createUserSchema, updateUserSchema, getUserSchema } from '../dtos/user.dto';
 
 
 const router = Router();
@@ -16,7 +16,7 @@ router.get('/', async (req: Request, res: Response) => {
 
 router.get(
   '/:id',
-  validatorHandler(getUserDto, 'params'),
+  validatorHandler(getUserSchema, 'params'),
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
 
@@ -32,7 +32,7 @@ router.get(
 
 router.post(
   '/',
-  validatorHandler(createUserDto, 'body'),
+  validatorHandler(createUserSchema, 'body'),
   async (req: Request, res: Response) => {
     const body = req.body;
     await usersService.create(body);
@@ -46,8 +46,8 @@ router.post(
 
 router.patch(
   '/:id',
-  validatorHandler(getUserDto, 'params'),
-  validatorHandler(updeateUserDto, 'body'),
+  validatorHandler(getUserSchema, 'params'),
+  validatorHandler(updateUserSchema, 'body'),
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
     const body = req.body;
@@ -64,7 +64,7 @@ router.patch(
 
 router.delete(
   '/:id',
-  validatorHandler(getUserDto, 'params'),
+  validatorHandler(getUserSchema, 'params'),
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
 

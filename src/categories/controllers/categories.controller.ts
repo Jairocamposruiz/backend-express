@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 
 import CategoriesService from '../services/categories.service';
-import { createCategoryDto, updateCategoryDto, getCategoryDto } from '../dtos/category.dto';
+import { createCategorySchema, updateCategorySchema, getCategorySchema } from '../dtos/category.dto';
 import { validatorHandler } from '../../common/middlewares/validator.handler';
 
 
@@ -16,7 +16,7 @@ router.get('/', async (req: Request, res: Response) => {
 
 router.get(
   '/:id',
-  validatorHandler(getCategoryDto, 'params'),
+  validatorHandler(getCategorySchema, 'params'),
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
 
@@ -32,7 +32,7 @@ router.get(
 
 router.post(
   '/',
-  validatorHandler(createCategoryDto, 'body'),
+  validatorHandler(createCategorySchema, 'body'),
   async (req: Request, res: Response) => {
     const body = req.body;
     await categoriesService.create(body);
@@ -46,8 +46,8 @@ router.post(
 
 router.patch(
   '/:id',
-  validatorHandler(getCategoryDto, 'params'),
-  validatorHandler(updateCategoryDto, 'body'),
+  validatorHandler(getCategorySchema, 'params'),
+  validatorHandler(updateCategorySchema, 'body'),
   async (req: Request, res: Response, next: NextFunction) => {
     const body = req.body;
     const { id } = req.params;
@@ -64,7 +64,7 @@ router.patch(
 
 router.delete(
   '/:id',
-  validatorHandler(getCategoryDto, 'params'),
+  validatorHandler(getCategorySchema, 'params'),
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
 

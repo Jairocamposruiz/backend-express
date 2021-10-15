@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 
 import ProductsService from '../services/products.service';
-import { createProductDto, updateProductDto, getProductDto } from '../dtos/product.dto';
+import { createProductSchema, updateProductSchema, getProductSchema, UpdateProductDto } from '../dtos/product.dto';
 import { validatorHandler } from '../../common/middlewares/validator.handler';
 
 
@@ -16,7 +16,7 @@ router.get('/', async (req: Request, res: Response) => {
 
 router.get(
   '/:id',
-  validatorHandler(getProductDto, 'params'),
+  validatorHandler(getProductSchema, 'params'),
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
 
@@ -32,7 +32,7 @@ router.get(
 
 router.post(
   '/',
-  validatorHandler(createProductDto, 'body'),
+  validatorHandler(createProductSchema, 'body'),
   async (req: Request, res: Response) => {
     const body = req.body;
     await productsService.create(body);
@@ -46,8 +46,8 @@ router.post(
 
 router.patch(
   '/:id',
-  validatorHandler(getProductDto, 'params'),
-  validatorHandler(updateProductDto, 'body'),
+  validatorHandler(getProductSchema, 'params'),
+  validatorHandler(updateProductSchema, 'body'),
   async (req: Request, res: Response, next: NextFunction) => {
     const body = req.body;
     const { id } = req.params;
@@ -64,7 +64,7 @@ router.patch(
 
 router.delete(
   '/:id',
-  validatorHandler(getProductDto, 'params'),
+  validatorHandler(getProductSchema, 'params'),
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
 

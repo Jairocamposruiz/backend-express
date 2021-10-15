@@ -1,17 +1,15 @@
 import boom from '@hapi/boom';
 const faker = require('faker');
 
+import {CreateProductDto, UpdateProductDto, GetProductDto } from '../dtos/product.dto';
 
-type Product = {
-  name?: string,
-  price?: number,
-  image?: string,
-  id: string,
-  isBlock: boolean,
-}
 
 class ProductsService {
-  products: Product[];
+  products: {name?: string,
+    price?: number,
+    image?: string,
+    id?: string,
+    isBlock?: boolean,}[];
 
   constructor () {
     this.products = [];
@@ -35,7 +33,7 @@ class ProductsService {
     return this.products;
   }
 
-  async findOne (id: string) {
+  async findOne (id: GetProductDto) {
     const product = this.products.find((product) => id === product.id);
 
     if (!product) throw boom.notFound('Product not found');
@@ -45,7 +43,7 @@ class ProductsService {
     return product;
   }
 
-  async create (payload: { name: string, price: number, image: string, isBlock: boolean }) {
+  async create (payload: CreateProductDto) {
     const newProduct = {
       ...payload,
       id: faker.datatype.uuid(),
@@ -53,7 +51,7 @@ class ProductsService {
     this.products.push(newProduct);
   }
 
-  async update (id: string, payload: { name?: string, price?: number, image?: string, isBlock?: boolean }) {
+  async update (id: GetProductDto, payload: UpdateProductDto) {
     const index = this.products.findIndex((product) => product.id === id);
 
     if (index === -1) throw boom.notFound('Product not found');
@@ -66,7 +64,7 @@ class ProductsService {
     return this.products[index];
   }
 
-  async delete (id: string) {
+  async delete (id: GetProductDto) {
     const index = this.products.findIndex((product) => product.id === id);
 
     if (index === -1) throw boom.notFound('Product not found');

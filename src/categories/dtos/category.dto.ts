@@ -5,17 +5,18 @@ const id = Joi.string().uuid();
 const name = Joi.string().min(3).max(15);
 const image = Joi.string().uri();
 
-export const createCategoryDto = Joi.object({
+
+export const createCategorySchema = Joi.object({
   name: name.required(),
   image: image.required(),
 });
 
-export const updateCategoryDto = Joi.object({
+export const updateCategorySchema = Joi.object({
   name: name,
   image: image,
 });
 
-export const getCategoryDto = Joi.object({
+export const getCategorySchema = Joi.object({
   id: id,
 });
 
@@ -30,6 +31,4 @@ export type UpdateCategoryDto = {
   image?: string,
 }
 
-export type GetCategoryDto = {
-  id: string
-}
+export type GetCategoryDto = string;
