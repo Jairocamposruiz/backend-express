@@ -18,7 +18,7 @@ router.get(
   '/:id',
   validatorHandler(getProductDto, 'params'),
   async (req: Request, res: Response, next: NextFunction) => {
-    const id = req.params.id;
+    const { id } = req.params;
 
     try {
       const product = await productsService.findOne(id);
