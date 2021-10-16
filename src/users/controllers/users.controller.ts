@@ -8,9 +8,13 @@ import { createUserSchema, updateUserSchema, getUserSchema } from '../dtos/user.
 const router = Router();
 const usersService = new UsersService();
 
-router.get('/', async (req: Request, res: Response) => {
-  const users = await usersService.find();
-  res.status(200).json(users);
+router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const users = await usersService.find();
+    res.status(200).json(users);
+  } catch (error) {
+    next(error);
+  }
 });
 
 
@@ -21,7 +25,7 @@ router.get(
     const { id } = req.params;
 
     try {
-      const user = await usersService.findOne(id);
+      const user = await usersService.findOne(parseInt(id));
       res.status(200).json(user);
     } catch (error) {
       next(error);
@@ -33,13 +37,16 @@ router.get(
 router.post(
   '/',
   validatorHandler(createUserSchema, 'body'),
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     const body = req.body;
-    await usersService.create(body);
-
-    res.status(201).json({
-      message: 'User was created'
-    });
+    try {
+      await usersService.create(body);
+      res.status(201).json({
+        message: 'User was created'
+      });
+    } catch (error) {
+      next(error);
+    }
   }
 );
 
@@ -53,7 +60,7 @@ router.patch(
     const body = req.body;
 
     try {
-      const userEdited = await usersService.update(id, body);
+      const userEdited = await usersService.update(parseInt(id), body);
       res.status(200).json(userEdited);
     } catch (error) {
       next(error);
@@ -69,7 +76,7 @@ router.delete(
     const { id } = req.params;
 
     try {
-      const rta = await usersService.delete(id);
+      const rta = await usersService.delete(parseInt(id));
       res.status(200).json(rta);
     } catch (error) {
       next(error);

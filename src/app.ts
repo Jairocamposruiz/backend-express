@@ -3,7 +3,7 @@ import path from 'path';
 const cors = require('cors');
 
 import routerApi from './router';
-import { logErrors, errorHandler, boomErrorHandler } from './common/middlewares/error.handler';
+import { logErrors, errorHandler, boomErrorHandler, sequelizeErrorHandler } from './common/middlewares/error.handler';
 
 
 // Create Express server
@@ -36,6 +36,7 @@ app.use(
 routerApi(app);
 
 app.use(boomErrorHandler);
+app.use(sequelizeErrorHandler);
 app.use(logErrors);
 app.use(errorHandler);
 

@@ -1,11 +1,11 @@
 import Joi from 'joi';
 
 
-const id = Joi.string().uuid();
+const id = Joi.number().integer();
 const name = Joi.string().min(3).max(15);
 const email = Joi.string().email();
 const password = Joi.string().min(8);
-const role = Joi.string().min(5);
+const role = Joi.string().min(2);
 
 
 export const createUserSchema = Joi.object({
@@ -41,4 +41,4 @@ export type UpdateUserDto = {
   role?: string,
 }
 
-export type GetUserDto = string;
+export type GetUserDto = number;
