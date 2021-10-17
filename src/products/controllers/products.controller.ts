@@ -21,7 +21,7 @@ router.get(
     const { id } = req.params;
 
     try {
-      const product = await productsService.findOne(id);
+      const product = await productsService.findOne(parseInt(id));
       res.status(200).json(product);
     } catch (error) {
       next(error);
@@ -53,7 +53,7 @@ router.patch(
     const { id } = req.params;
 
     try {
-      const productEdited = await productsService.update(id, body);
+      const productEdited = await productsService.update(parseInt(id), body);
       res.status(200).json(productEdited);
     } catch (error) {
       next(error);
@@ -69,7 +69,7 @@ router.delete(
     const { id } = req.params;
 
     try {
-      const rta = await productsService.delete(id);
+      const rta = await productsService.delete(parseInt(id));
       res.status(200).json(rta);
     } catch (error) {
       next(error);

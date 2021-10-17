@@ -1,6 +1,0 @@
-module.exports = {
-'config': './src/common/database/config.ts',
-'models-path': './src/common/database/models.ts',
-'migrations-path': './src/common/database/migrations/',
-'seeders-path': './src/common/database/seeders/',
-}

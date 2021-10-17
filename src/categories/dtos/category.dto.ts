@@ -1,7 +1,7 @@
 import * as Joi from 'joi';
 
 
-const id = Joi.string().uuid();
+const id = Joi.number();
 const name = Joi.string().min(3).max(15);
 const image = Joi.string().uri();
 
@@ -31,4 +31,4 @@ export type UpdateCategoryDto = {
   image?: string,
 }
 
-export type GetCategoryDto = string;
+export type GetCategoryDto = number;

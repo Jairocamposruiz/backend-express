@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 
-const id = Joi.string().uuid();
+const id = Joi.number();
 const name = Joi.string().min(3).max(15);
 const price = Joi.number().integer().min(10);
 const isBlock = Joi.boolean();
@@ -41,4 +41,4 @@ export type UpdateProductDto = {
   image?: string,
 }
 
-export type GetProductDto = string;
+export type GetProductDto = number;

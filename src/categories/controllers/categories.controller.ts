@@ -21,7 +21,7 @@ router.get(
     const { id } = req.params;
 
     try {
-      const category = await categoriesService.findOne(id);
+      const category = await categoriesService.findOne(parseInt(id));
       res.status(200).json(category);
     } catch (error) {
       next(error);
@@ -53,7 +53,7 @@ router.patch(
     const { id } = req.params;
 
     try {
-      const categoryEdited = await categoriesService.update(id, body);
+      const categoryEdited = await categoriesService.update(parseInt(id), body);
       res.status(200).json(categoryEdited);
     } catch (error) {
       next(error);
@@ -69,7 +69,7 @@ router.delete(
     const { id } = req.params;
 
     try {
-      const rta = await categoriesService.delete(id);
+      const rta = await categoriesService.delete(parseInt(id));
       res.status(200).json(rta);
     } catch (error) {
       next(error);
