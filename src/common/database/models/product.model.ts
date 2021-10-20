@@ -1,4 +1,6 @@
-import { Model, DataTypes, Sequelize, NOW, Optional } from 'sequelize';
+import { Model, DataTypes, Sequelize, NOW } from 'sequelize';
+
+import { CATEGORY_TABLE } from './category.model';
 
 
 export const PRODUCT_TABLE = 'products';
@@ -18,6 +20,10 @@ export const ProductSchema = {
     allowNull: false,
     type: DataTypes.FLOAT,
   },
+  description: {
+    allowNull: false,
+    type: DataTypes.TEXT,
+  },
   isBlock: {
     allowNull: false,
     defaultValue: false,
@@ -32,33 +38,24 @@ export const ProductSchema = {
     type: DataTypes.DATE,
     field: 'created_at',
     defaultValue: NOW,
+  },
+  categoryId: {
+    field: 'category_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: CATEGORY_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   }
 };
 
 
-interface ProductAttributes {
-  id: number,
-  name: string,
-  price: number,
-  isBlock: boolean,
-  image: string,
-  createdAt: Date
-}
-
-interface ProductCreationAttributes extends Optional<ProductAttributes, "id"> {}
-
-
-export class ProductModel extends Model<ProductAttributes, ProductCreationAttributes> implements ProductAttributes {
-  public id!: number;
-  public name!: string;
-  public price!: number;
-  public isBlock!: boolean;
-  public image!: string;
-
-  public readonly createdAt!: Date;
-
-  static associate () {
-
+export class ProductModel extends Model {
+  static associate (models: any) {
+    this.belongsTo(models.Category, { as: 'category' });
   }
 
   static config (sequelize: Sequelize) {

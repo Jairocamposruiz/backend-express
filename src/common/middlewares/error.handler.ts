@@ -1,6 +1,6 @@
 import Boom from 'boom';
 import { Request, Response, NextFunction } from 'express';
-import { ValidationError } from 'sequelize';
+import { ValidationError, ForeignKeyConstraintError } from 'sequelize';
 
 
 export function logErrors (error: Error, req: Request, res: Response, next: NextFunction) {
@@ -31,6 +31,12 @@ export function sequelizeErrorHandler (error: Error, req: Request, res: Response
       'error': error.errors[0].type,
       'message': error.errors[0].message
     });
+  } else if (error instanceof ForeignKeyConstraintError) {
+    res.status(409).json({
+      'statusCode': 409,
+      'error': "Error in Foreing key",
+      'message': error.message
+    })
   } else {
     next(error);
   }

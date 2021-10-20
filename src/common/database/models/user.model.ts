@@ -10,10 +10,6 @@ export const UserSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  name: {
-    allowNull: false,
-    type: DataTypes.STRING,
-  },
   email: {
     allowNull: false,
     type: DataTypes.STRING,
@@ -26,6 +22,7 @@ export const UserSchema = {
   role: {
     allowNull: false,
     type: DataTypes.STRING,
+    defaultValue: 'customer',
   },
   createdAt: {
     allowNull: false,
@@ -37,8 +34,11 @@ export const UserSchema = {
 
 
 export class UserModel extends Model {
-  static associate () {
-
+  static associate (models: any) {
+    this.hasOne(models.Customer, {
+      as: 'customer',
+      foreignKey: 'userId',
+    });
   }
 
   static config (sequelize: Sequelize) {

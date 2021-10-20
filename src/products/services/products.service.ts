@@ -8,7 +8,9 @@ const productRepo = sequelize.models.Product;
 
 class ProductsService {
   async find () {
-    return await productRepo.findAll();
+    return await productRepo.findAll({
+      include: ['category']
+    });
   }
 
   async findOne (id: GetProductDto) {
@@ -16,9 +18,8 @@ class ProductsService {
 
     if (!product) throw boom.notFound('Product not found');
 
-    // console.log(product)
-    // console.log(product.getDataValue(product));
-    // if (product.isBlock) throw boom.conflict('Product is block');
+    // @ts-ignore
+    if (product.isBlock) throw boom.conflict('Product is block');
 
     return product;
   }

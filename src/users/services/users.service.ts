@@ -11,7 +11,9 @@ class UsersService {
   }
 
   async find () {
-    return await userRepo.findAll();
+    return await userRepo.findAll({
+      include: ['customer']
+    });
   }
 
 
