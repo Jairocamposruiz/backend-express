@@ -6,7 +6,6 @@ const customerId = Joi.number().integer();
 
 
 export const createOrderSchema = Joi.object({
-  id: id.required(),
   customerId: customerId.required(),
 });
 
@@ -23,8 +22,6 @@ export type CreateOrderDto = {
   customerId: number,
 }
 
-export type UpdateOrderDto = {
-  customerId?: number,
-}
+export type UpdateOrderDto = Partial<CreateOrderDto>;
 
 export type GetOrderDto = number;

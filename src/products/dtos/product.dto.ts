@@ -42,13 +42,6 @@ export type CreateProductDto = {
   categoryId: number,
 }
 
-export type UpdateProductDto = {
-  name?: string,
-  price?: number,
-  description?: string
-  isBlock?: boolean,
-  image?: string,
-  categoryId?: number,
-}
+export type UpdateProductDto = Partial<CreateProductDto>;
 
 export type GetProductDto = number;

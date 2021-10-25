@@ -33,10 +33,6 @@ export type CreateCustomerDto = {
   phone?: string,
 }
 
-export type UpdateCustomerDto = {
-  name?: string,
-  lastName?: string,
-  phone?: string,
-}
+export type UpdateCustomerDto = Partial<CreateCustomerDto>;
 
 export type GetCustomerDto = number;

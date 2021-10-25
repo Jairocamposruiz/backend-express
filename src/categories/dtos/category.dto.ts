@@ -26,9 +26,6 @@ export type CreateCategoryDto = {
   image: string,
 }
 
-export type UpdateCategoryDto = {
-  name?: string,
-  image?: string,
-}
+export type UpdateCategoryDto = Partial<CreateCategoryDto>;
 
 export type GetCategoryDto = number;

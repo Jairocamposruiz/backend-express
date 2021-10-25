@@ -5,6 +5,7 @@ import { CategoryModel, CategorySchema } from './category.model';
 import { ProductModel, ProductSchema } from './product.model';
 import { CustomerModel, CustomerSchema } from './customer.model';
 import { OrderModel, OrderSchema } from './order.model';
+import { OrderProductModel, OrderProductSchema } from './order-product.model';
 
 
 function setupModels (sequelize: Sequelize) {
@@ -13,12 +14,14 @@ function setupModels (sequelize: Sequelize) {
   ProductModel.init(ProductSchema, ProductModel.config(sequelize));
   CustomerModel.init(CustomerSchema, CustomerModel.config(sequelize));
   OrderModel.init(OrderSchema, OrderModel.config(sequelize));
+  OrderProductModel.init(OrderProductSchema, OrderProductModel.config(sequelize));
 
   UserModel.associate(sequelize.models);
   CustomerModel.associate(sequelize.models);
   CategoryModel.associate(sequelize.models);
   ProductModel.associate(sequelize.models);
   OrderModel.associate(sequelize.models);
+  OrderProductModel.associate(sequelize.models);
 }
 
 export default setupModels;

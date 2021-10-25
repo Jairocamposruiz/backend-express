@@ -30,10 +30,6 @@ export type CreateUserDto = {
   role?: string,
 }
 
-export type UpdateUserDto = {
-  email?: string,
-  password?: string,
-  role?: string,
-}
+export type UpdateUserDto = Partial<CreateUserDto>;
 
 export type GetUserDto = number;

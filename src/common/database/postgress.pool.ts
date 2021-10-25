@@ -1,5 +1,7 @@
-const { Pool } = require('pg');
+// const { Pool } = require('pg');
 
+// @ts-ignore
+import { Pool } from 'pg';
 import config from '../../config';
 
 

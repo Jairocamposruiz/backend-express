@@ -15,7 +15,12 @@ class OrdersService {
 
   async findOne (id: GetOrderDto) {
     const order = await orderRepo.findByPk(id, {
-      include: ['customer']
+      include: [
+        {
+          association: 'customer',
+          include: ['user']
+        }
+      ]
     });
 
     if (!order) throw boom.notFound('Order not found');
