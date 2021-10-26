@@ -27,7 +27,7 @@ setupModels(sequelize);
 
 
 // Remove in case of going to production
-sequelize.sync();
+// sequelize.sync();
 
 
 export default sequelize;
