@@ -4,27 +4,30 @@ import config from '../../config';
 import setupModels from './models';
 
 
-const { dbUser, dbPassword, dbHost, dbPort, dbName } = config;
-
-if (!dbPassword || !dbUser) {
-  throw new Error('Introduce database credentials (Environments Variables)');
+if (!config.dbUrl) {
+  throw new Error('Introduce DATABASE_URL');
 }
 
-if (!dbHost || !dbPort || !dbName) {
-  throw new Error('Introduce database config (Environments Variables)');
-}
+const URI = config.dbUrl;
 
-const USER = encodeURIComponent(dbUser);
-const PASSWORD = encodeURIComponent(dbPassword);
-const URI = `postgres://${USER}:${PASSWORD}@${dbHost}:${dbPort}/${dbName}`;
-
-const sequelize = new Sequelize(URI, {
+const options: any = {
   dialect: 'postgres',
-  logging: (msg) => console.log('\x1b[36m%s\x1b[0m', `Query:\n   ${msg} \n`),
-});
+  logging: config.isProd ? false : (msg: any) => console.log('\x1b[36m%s\x1b[0m', `Query:\n   ${msg} \n`),
+};
+
+if (config.isProd) {
+  options.ssl = {
+    rejectUnauthorized: false
+  };
+}
+
+const sequelize = new Sequelize(URI, options);
 
 setupModels(sequelize);
 
+
+// Remove in case of going to production
 sequelize.sync();
+
 
 export default sequelize;

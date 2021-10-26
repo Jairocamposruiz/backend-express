@@ -44,3 +44,7 @@ npm run lint
 # fix lint issues
 npm run lint:fix
 ```
+
+# Migrations
+Migrations are not implemented, in case of going to production implement migrations and 
+remove *sinc()** in *sequelize.ts*
