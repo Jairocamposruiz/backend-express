@@ -1,17 +1,27 @@
 import { Router, Request, Response, NextFunction } from 'express';
 
 import ProductsService from '../services/products.service';
-import { createProductSchema, updateProductSchema, getProductSchema, UpdateProductDto } from '../dtos/product.dto';
+import { createProductSchema, updateProductSchema, getProductSchema, queryProductSchema } from '../dtos/product.dto';
 import { validatorHandler } from '../../common/middlewares/validator.handler';
 
 
 const router = Router();
 const productsService = new ProductsService();
 
-router.get('/', async (req: Request, res: Response) => {
-  const products = await productsService.find();
-  res.status(200).json(products);
-});
+router.get(
+  '/',
+  validatorHandler(queryProductSchema, 'query'),
+  async (req: Request, res: Response, next: NextFunction) => {
+    const query = req.query;
+
+    try {
+      const products = await productsService.find(query);
+      res.status(200).json(products);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 
 router.get(

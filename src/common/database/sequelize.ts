@@ -25,6 +25,6 @@ const sequelize = new Sequelize(URI, {
 
 setupModels(sequelize);
 
-// sequelize.sync();
+sequelize.sync();
 
 export default sequelize;

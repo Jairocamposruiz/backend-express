@@ -1,10 +1,11 @@
 import boom from '@hapi/boom';
 
-import { CreateOrderDto, UpdateOrderDto, GetOrderDto } from '../dtos/order.dto';
+import { CreateOrderDto, UpdateOrderDto, GetOrderDto, AddItemDto } from '../dtos/order.dto';
 import sequelize from '../../common/database/sequelize';
 
 
 const orderRepo = sequelize.models.Order;
+const itemRepo = sequelize.models.OrderProduct;
 
 class OrdersService {
   async find () {
@@ -19,7 +20,8 @@ class OrdersService {
         {
           association: 'customer',
           include: ['user']
-        }
+        },
+        'items'
       ]
     });
 
@@ -31,6 +33,14 @@ class OrdersService {
   async create (payload: CreateOrderDto) {
     try {
       await orderRepo.create(payload);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async addItem (payload: AddItemDto) {
+    try {
+      return await itemRepo.create(payload);
     } catch (error) {
       throw error;
     }

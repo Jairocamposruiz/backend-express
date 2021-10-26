@@ -28,7 +28,7 @@ export const OrderSchema = {
     type: DataTypes.DATE,
     field: 'created_at',
     defaultValue: NOW,
-  },
+  }
 };
 
 export class OrderModel extends Model {

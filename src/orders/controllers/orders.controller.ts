@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 
 import OrdersService from '../services/orders.service';
-import { createOrderSchema, updateOrderSchema, getOrderSchema } from '../dtos/order.dto';
+import { createOrderSchema, updateOrderSchema, getOrderSchema, addItemSchema } from '../dtos/order.dto';
 import { validatorHandler } from '../../common/middlewares/validator.handler';
 
 
@@ -46,6 +46,22 @@ router.post(
     }
   }
 );
+
+
+router.post(
+  '/add-item',
+  validatorHandler(addItemSchema, 'body'),
+  async (req: Request, res: Response, next: NextFunction) => {
+    const body = req.body;
+
+    try {
+      const newItem = await orderService.addItem(body);
+      res.status(201).json(newItem);
+    } catch (error) {
+      next(error);
+    }
+  }
+)
 
 
 router.patch(
